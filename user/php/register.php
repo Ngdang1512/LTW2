@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/user/css/login.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <title>Register</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <form action="" id="form-register">
+            <h1 class="form-heading">Đăng ký tài khoản</h1>
+            
+            <div class="form-group">
+                <i class="far fa-user"></i>
+                <input type="text" class="form-input" placeholder="Tên đăng nhập" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" class="form-input" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-key"></i>
+                <input type="password" class="form-input" placeholder="Mật khẩu" required>
+            </div>
+
+            <input type="submit" value="Đăng ký" class="form-submit">
+
+            <div class="back-link">
+                <p>Đã có tài khoản? <a href="login.php">Đăng nhập</a></p>
+            </div>
+
+            <div class="back-home">
+                <a href="index.php">
+                    <i class="fas fa-home" style="color: black; cursor: pointer;"></i>
+                </a>
+            </div>
+            
+        </form>
+    </div>
+
+    <script src="<?= $base ?>/js/register.js"></script>
+</body>
+</html>
