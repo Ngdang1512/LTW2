@@ -1,4 +1,9 @@
-<!-- filepath: d:\xampp\htdocs\LTW\user\php\header.php -->
+<?php
+session_start();
+$cart_count = isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0;
+$cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+?>
+
 <header class="navbar navbar-expand-lg" style="background-color: #f8f9fa; border-bottom: 1px solid #ddd;">
     <div class="container">
         <!-- Logo -->
@@ -78,10 +83,20 @@
             <div class="d-flex align-items-center">
                 <a href="cart.php" class="btn btn-outline-dark me-3 position-relative">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <?php echo $cart_count; ?>
+                    </span>
                 </a>
-                <a href="login.php" class="btn btn-outline-dark me-2">Đăng nhập</a>
-                <a href="register.php" class="btn btn-dark text-white">Đăng ký</a>
+                <!-- Kiểm tra trạng thái đăng nhập -->
+                <?php if (isset($_SESSION['username'])): ?>
+                    <div class="d-flex align-items-center">
+                        <p class="mb-0 me-3">Xin chào, <strong><?= htmlspecialchars($_SESSION['username']); ?></strong></p>
+                        <a href="logout.php" class="btn btn-danger">Đăng xuất</a>
+                    </div>
+                <?php else: ?>
+                    <a href="login.php" class="btn btn-outline-dark me-2">Đăng nhập</a>
+                    <a href="register.php" class="btn btn-dark text-white">Đăng ký</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -89,6 +104,41 @@
     <script src="https://kit.fontawesome.com/dc2acc0315.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </header>
+
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">Giỏ hàng của bạn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php if (!empty($cart_items)): ?>
+                    <ul class="list-group">
+                        <?php foreach ($cart_items as $item): ?>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="<?= htmlspecialchars($item['image']); ?>" alt="<?= htmlspecialchars($item['title']); ?>" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                                    <div>
+                                        <h6 class="mb-0"><?= htmlspecialchars($item['title']); ?></h6>
+                                        <small class="text-muted">Giá: <?= htmlspecialchars($item['price']); ?> VND</small>
+                                    </div>
+                                </div>
+                                <span class="badge bg-primary rounded-pill">x<?= $item['quantity']; ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <p class="text-center">Giỏ hàng của bạn đang trống.</p>
+                <?php endif; ?>
+            </div>
+            <div class="modal-footer">
+                <a href="cart.php" class="btn btn-primary">Xem giỏ hàng</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
     /* Tùy chỉnh cho super-dropdown-toggle */
