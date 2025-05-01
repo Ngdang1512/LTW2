@@ -109,19 +109,7 @@ if ($result->num_rows > 0) {
             font-weight: bold;
             margin-bottom: 15px;
         }
-        .btn-buy {
-            background-color: #000;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        .btn-buy:hover {
-            background-color: #ccc;
-            color: #000;
-        }
+
         .pagination {
             display: flex;
             justify-content: center;
@@ -230,6 +218,8 @@ if ($result->num_rows > 0) {
     <?php include 'footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/dc2acc0315.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </body>
 
 </html>

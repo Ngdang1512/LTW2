@@ -120,18 +120,6 @@ if ($result->num_rows > 0) {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         transform: scale(1.05); /* Hiệu ứng phóng to nhẹ */
     }
-    /* Radio buttons */
-    .product-version label, .product-sizes label {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 1rem;
-        color: #555;
-        cursor: pointer;
-    }
-
-    .product-version input[type="radio"], .product-sizes input[type="radio"] {
-        margin-right: 10px;
-    }
 
     /* Số lượng */
     .product-quantity .btn {
@@ -153,50 +141,6 @@ if ($result->num_rows > 0) {
         margin: 0;
     }
 
-    .product-quantity input[type="number"] {
-        -moz-appearance: textfield;
-    }
-
-    .size-box input[type="radio"] {
-        display: none;
-        gap: 10px;
-    }
-
-    .size-options {
-        display: flex;
-        gap: 15px;
-        margin: 10px ;
-    }
-
-    .size-box {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border: 2px solid #000;
-        background: #fff;
-        cursor: pointer;
-        font-weight: bold;
-        transition: all 0.3s ease;
-    }
-
-    .size-box span {
-        display: block;
-        color: #000;
-        align-items: center;
-    }
-
-    .size-box:hover {
-        border-color: #000;
-        transform: scale(1.05); /* Phóng to nhẹ khi hover */
-    }
-
-    .size-box input[type="radio"]:checked + span {
-        background: #000;
-        border-color: #333;
-        color: white;
-    }
 </style>
 
 <body>
@@ -221,44 +165,6 @@ if ($result->num_rows > 0) {
                     <p><strong>Mã sản phẩm:</strong> <?php echo $product['product_code']; ?></p>
                     <p><strong>Thương hiệu:</strong> <?php echo $product['brand']; ?></p>
                     <p><strong>Tình trạng:</strong> <?php echo $product['status']; ?></p>
-
-                    <div class="product-version mt-4">
-                        <h2 class="fs-5">Chọn [Phiên bản]</h2>
-                        <div>
-                            <label>
-                                <input type="radio" name="version" value="Có bảo hành">
-                                Có bảo hành: 4.529.000 VND
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="radio" name="version" value="Không bảo hành" checked>
-                                Không bảo hành: 4.000.000 VND
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="product-sizes mt-4">
-                        <h2 class="fs-5">Chọn [Size]</h2>
-                        <div class="size-options d-flex">
-                            <label class="size-box">
-                                <input type="radio" name="size" value="3U5" checked>
-                                <span>3U5</span>
-                            </label>
-                            <label class="size-box">
-                                <input type="radio" name="size" value="3U6">
-                                <span>3U6</span>
-                            </label>
-                            <label class="size-box">
-                                <input type="radio" name="size" value="4U5">
-                                <span>4U5</span>
-                            </label>
-                            <label class="size-box">
-                                <input type="radio" name="size" value="4U6">
-                                <span>4U6</span>
-                            </label>
-                        </div>
-                    </div>
 
                     <div class="product-quantity mt-4">
                         <h2 class="fs-5">Số lượng</h2>

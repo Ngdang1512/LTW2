@@ -17,13 +17,13 @@
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="/user/php/index.php">Trang chủ</a></li>
                 <li class="nav-item dropdown position-static">
-                    <a class="nav-link super-dropdown-toggle text-dark fw-semibold" href="#" id="productsDropdown" role="button">
+                    <a class="nav-link super-dropdown-toggle text-dark fw-semibold" href="/user/php/products.php" id="productsDropdown" role="button">
                         Sản phẩm
                     </a>
                     <ul class="dropdown-menu shadow">
                         <!-- Vợt cầu lông -->
                         <li class="dropdown-item dropdown position-relative">
-                            <a class="dropdown-toggle text-dark no-underline" href="/user/php/products-yonex-page-1.php" id="racketDropdown" role="button" style="text-decoration: none;">
+                            <a class="dropdown-toggle text-dark no-underline" href="/user/php/products-rackets.php" id="racketDropdown" role="button" style="text-decoration: none;">
                                 Vợt cầu lông
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -35,7 +35,7 @@
                         </li>
                         <!-- Giày cầu lông -->
                         <li class="dropdown-item dropdown position-relative">
-                            <a class="dropdown-toggle text-dark no-underline" href="#" id="shoesDropdown" role="button" style="text-decoration: none;">
+                            <a class="dropdown-toggle text-dark no-underline" href="/user/php/products-shoes.php" id="shoesDropdown" role="button" style="text-decoration: none;">
                                 Giày cầu lông
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -85,6 +85,9 @@
             </div>
         </div>
     </div>
+
+    <script src="https://kit.fontawesome.com/dc2acc0315.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </header>
 
 <style>

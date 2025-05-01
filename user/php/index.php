@@ -6,19 +6,60 @@
     <meta name="description" content="Cửa hàng bán vợt và phụ kiện cầu lông" />
     <title>Badminton Racket Store</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/user/css/reset.css" />
-    <link rel="stylesheet" href="/user/css/index.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"><!DOCTYPE html>
-<html lang="en">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
 <body>
-    <!-- Renamed from .container to .app-container to avoid conflict with Bootstrap -->
+    <!-- Header -->
     <?php include 'header.php'; ?>
-    <?php include 'search.php'; ?>
-    <?php include 'banner.php'; ?>
-    <?php include 'products.php'; ?>
+
+    <!-- Search -->
+    <div class="container mt-4">
+        <?php include 'search.php'; ?>
+    </div>
+
+    <!-- Banner -->
+    <div id="carouselExampleIndicators" class="carousel slide mt-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/user/image/ban1.webp" class="d-block w-100" alt="Banner 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/user/image/ban2.webp" class="d-block w-100" alt="Banner 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/user/image/ban3.webp" class="d-block w-100" alt="Banner 3">
+            </div>
+            <div class="carousel-item">
+                <img src="/user/image/ban4.webp" class="d-block w-100" alt="Banner 3">
+            </div>
+            <div class="carousel-item">
+                <img src="/user/image/ban5.webp" class="d-block w-100" alt="Banner 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Products -->
+    <div class="container mt-5">
+        <?php include 'products-home.php'; ?>
+    </div>
+
+    <!-- Footer -->
     <?php include 'footer.php'; ?>
-    
+
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

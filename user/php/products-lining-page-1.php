@@ -1,10 +1,33 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "web2";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Kết nối thất bại: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM products";
+$result = $conn->query($sql);
+
+$products = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sản phẩm Yonex</title>
+    <title>Sản phẩm Lining</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -168,44 +191,45 @@
             <?php
             // Mô phỏng danh sách sản phẩm
             $products = [
-                ["id" => 1, "image" => "/user/image/88d_2.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
-                ["id" => 2,"image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
-                ["id" => 3,"image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
-                ["id" => 4,"image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"],
-                ["id" => 1,"image" => "/user/image/88d_2.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
-                ["id" => 2,"image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
-                ["id" => 3,"image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
-                ["id" => 4,"image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"],
-                ["id" => 1,"image" => "/user/image/88d_2.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
-                ["id" => 2,"image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
-                ["id" => 3,"image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
-                ["id" => 4,"image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"]
-            ];
+                ["id" => 5, "image" => "/user/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
+                ["id" => 6, "image" => "/user/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
+                ["id" => 7, "image" => "/user/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
+                ["id" => 8, "image" => "/user/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"],
+                ["id" => 5, "image" => "/user/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
+                ["id" => 6, "image" => "/user/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
+                ["id" => 7, "image" => "/user/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
+                ["id" => 8, "image" => "/user/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"],
+                ["id" => 5, "image" => "/user/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
+                ["id" => 6, "image" => "/user/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
+                ["id" => 7, "image" => "/user/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
+                ["id" => 8, "image" => "/user/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"]
+                ];
 
             // Hiển thị sản phẩm
             foreach ($products as $product) {
                 echo '<div class="product">';
+                echo '<a href="/user/php/products-detail.php?id=' . $product["id"] . '" style="text-decoration: none;">';
                 echo '<img src="' . $product["image"] . '" alt="' . $product["title"] . '">';
                 echo '<h4 class="product-title">' . $product["title"] . '</h4>';
                 echo '<p>Giá: ' . $product["price"] . '</p>';
-                echo '<a href="#" class="btn-buy">Mua ngay</a>';
+                echo '</a>';
                 echo '</div>';
             }
             ?>
         </div>
     </section>
-    
-        <!-- phân trang -->
+
+    <!-- Phân trang -->
     <div class="pagination">
-        <a href="/user/php/products-yonex-page-2.php" class="page-link">&laquo; Trang trước</a>
-        <a href="/user/php/products-yonex-page-1.php" class="page-link">1</a>
+        <span class="current-page">1</span>
         <a href="/user/php/products-yonex-page-2.php" class="page-link">2</a>
-        <span class="current-page">3</span>
+        <a href="/user/php/products-yonex-page-3.php" class="page-link">3</a>
+        <a href="/user/php/products-yonex-page-2.php" class="page-link">Trang sau &raquo;</a>
     </div>
 
-    <!-- Footer -->
-    <?php include 'footer.php' ?>
+    <?php include 'footer.php'; ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/dc2acc0315.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </body>

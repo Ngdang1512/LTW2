@@ -95,7 +95,7 @@
 <body>
 
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include "header.php"; ?>
 
     <!-- Sản phẩm -->
     <div class="container mt-5">
@@ -105,16 +105,6 @@
         // Gộp chung danh sách sản phẩm
         $products = [
             // Danh sách sản phẩm vợt
-            ["id" => 1, "image" => "/user/image/88d.jpg", "title" => "Yonex Astrox 88D Pro", "price" => "4,000,000 VND", "brand" => "Yonex"],
-            ["id" => 2, "image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3,500,000 VND", "brand" => "Yonex"],
-            ["id" => 3, "image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "4,380,000 VND", "brand" => "Yonex"],
-            ["id" => 4, "image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "3,380,000 VND", "brand" => "Yonex"],
-            ["id" => 5, "image" => "/user/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
-            ["id" => 6, "image" => "/user/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
-            ["id" => 7, "image" => "/user/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
-            ["id" => 8, "image" => "/user/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"],
-
-            // Danh sách sản phẩm giày
             ["id" => 9, "image" => "/user/image/65z3.jpg", "title" => "Yonex Power Cushion 65Z3", "price" => "2,800,000 VND", "brand" => "Yonex"],
             ["id" => 10, "image" => "/user/image/88dial3.webp", "title" => "Yonex Power Cushion 88 Dial 3", "price" => "3,200,000 VND", "brand" => "Yonex"],
             ["id" => 11, "image" => "/user/image/aerusZ2.webp", "title" => "Yonex Aerus Z2", "price" => "3,500,000 VND", "brand" => "Yonex"],
@@ -147,7 +137,7 @@
     </div>
 
     <!-- Footer -->
-    <?php include 'footer.php'; ?>
+    <?php include "footer.php"; ?>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
