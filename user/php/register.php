@@ -1,89 +1,94 @@
 <?php
-session_start();
-include('../db/connect.php')?>
- 
-<?php 
+include('../db/connect.php');
+$error_message = "";
 $success_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $email = $_POST['email'];
+    $username = trim($_POST["username"]);
+    $email = trim($_POST["email"]);
+    $password = $_POST["password"];
+    $confirm_password = $_POST["confirm_password"];
 
-    if (empty($username) || empty($password) || empty($email)) {
-        echo "Vui lòng điền đầy đủ thông tin.";
-        exit();
-    }
-
-    // Kiểm tra xem username đã tồn tại hay chưa
-    $check_sql = "SELECT * FROM users WHERE username = '$username'";
-    $result = $conn->query($check_sql);
-
-    if ($result->num_rows > 0) {
-        echo "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.";
-        exit();
-    }
-
-    // Nếu username chưa tồn tại, thêm vào cơ sở dữ liệu
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Mã hóa mật khẩu
-    $sql = "INSERT INTO users (username, password, email) VALUES ('$username', '$hashed_password', '$email')";
-
-    if ($conn->query($sql) === TRUE) {
-        header("Location: login.php?success=1");
-        exit();
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message = "Email không hợp lệ.";
+    } elseif ($password !== $confirm_password) {
+        $error_message = "Mật khẩu xác nhận không khớp.";
     } else {
-        echo "Lỗi khi thêm dữ liệu: " . $conn->error;
-    }
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1");
+        $stmt->bind_param("ss", $username, $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    // Đóng kết nối
-    $conn->close();
+        if ($result->num_rows > 0) {
+            $error_message = "Tên đăng nhập hoặc email đã tồn tại.";
+        } else {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $insert_stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+            $insert_stmt->bind_param("sss", $username, $email, $hashed_password);
+            if ($insert_stmt->execute()) {
+                $success_message = "Đăng ký thành công. <a href='login.php'>Đăng nhập ngay</a>";
+            } else {
+                $error_message = "Đăng ký thất bại. Vui lòng thử lại.";
+            }
+        }
+    }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/user/css/login.css" />
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-    <title>Register</title>
+    <title>Đăng ký</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-
-<body>
-    <div id="wrapper">
-        <form action="register.php" method="post" id="form-register">
-            <h1 class="form-heading">Đăng ký tài khoản</h1>
-            
-            <div class="form-group">
-                <i class="far fa-user"></i>
-                <input type="text" class="form-input"name="username" placeholder="Tên đăng nhập" required>
+<body class="bg-light d-flex align-items-center" style="height: 100vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow rounded-4 p-4">
+                    <h3 class="text-center mb-4">Đăng ký</h3>
+                    <?php if ($error_message): ?>
+                        <div class="alert alert-danger text-center"><?= $error_message ?></div>
+                    <?php elseif ($success_message): ?>
+                        <div class="alert alert-success text-center"><?= $success_message ?></div>
+                    <?php endif; ?>
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Tên đăng nhập</label>
+                            <input type="text" name="username" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Xác nhận mật khẩu</label>
+                            <input type="password" name="confirm_password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Đăng ký</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="/user/php/login.php">Đã có tài khoản? Đăng nhập</a>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <i class="fas fa-envelope"></i>
-                <input type="email" name="email" class="form-input" placeholder="Email" required>
-            </div>
-
-            <div class="form-group">
-                <i class="fas fa-key"></i>
-                <input type="password" name="password" class="form-input" placeholder="Mật khẩu" required>
-            </div>
-             
-            <input type="submit" name="dangky" value="Đăng ký" class="form-submit">
-
-            <div class="back-link">
-                <p>Đã có tài khoản? <a href="login.php">Đăng nhập</a></p>
-            </div>
-
-            <div class="back-home">
-                <a href="/user/php/index.php">
-                    <i class="fas fa-home" style="color: black; cursor: pointer;"></i>
-                </a>
-            </div>
-            
-        </form>
+        </div>
     </div>
-
 </body>
 </html>

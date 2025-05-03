@@ -1,9 +1,52 @@
 <?php
 include '../db/connect.php';
 
-$sql = "SELECT * FROM products";
-$result = $conn->query($sql);
+// Khởi tạo câu truy vấn SQL cơ bản
+$sql = "SELECT * FROM products WHERE 1=1";
 
+// Kiểm tra nếu có bộ lọc nào được áp dụng và thêm vào câu truy vấn SQL
+if (isset($_GET['price'])) {
+    $price = $_GET['price'];
+    if ($price == 'under-2m') {
+        $sql .= " AND price < 2000000";
+    } elseif ($price == '2m-4m') {
+        $sql .= " AND price BETWEEN 2000000 AND 4000000";
+    } elseif ($price == 'above-4m') {
+        $sql .= " AND price > 4000000";
+    }
+}
+
+if (isset($_GET['brand'])) {
+    $brand = $_GET['brand'];
+    $sql .= " AND brand = '$brand'";
+}
+
+if (isset($_GET['length'])) {
+    $length = $_GET['length'];
+    $sql .= " AND length = $length";
+}
+
+if (isset($_GET['handle_length'])) {
+    $handle_length = $_GET['handle_length'];
+    $sql .= " AND handle_length = $handle_length";
+}
+
+if (isset($_GET['swingweight'])) {
+    $swingweight = $_GET['swingweight'];
+    if ($swingweight == 'under-82') {
+        $sql .= " AND swingweight < 82";
+    } elseif ($swingweight == '82-84') {
+        $sql .= " AND swingweight BETWEEN 82 AND 84";
+    } elseif ($swingweight == '84-86') {
+        $sql .= " AND swingweight BETWEEN 84 AND 86";
+    } elseif ($swingweight == '86-88') {
+        $sql .= " AND swingweight BETWEEN 86 AND 88";
+    } elseif ($swingweight == 'above-88') {
+        $sql .= " AND swingweight > 88";
+    }
+}
+
+$result = $conn->query($sql);
 $products = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -11,6 +54,7 @@ if ($result->num_rows > 0) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -135,9 +179,9 @@ if ($result->num_rows > 0) {
         <!-- Bộ lọc -->
         <form action="filter-products.php" method="GET" class="filter-form">
             <h3>Lọc theo giá</h3>
-            <label><input type="checkbox" name="price" value="under-2m"> Dưới 2 triệu</label>
-            <label><input type="checkbox" name="price" value="2m-4m"> Từ 2 triệu - 4 triệu</label>
-            <label><input type="checkbox" name="price" value="above-4m"> Trên 4 triệu</label>
+            <label><input type="checkbox" name="price[]" value="under-2m"> Dưới 2 triệu</label>
+            <label><input type="checkbox" name="price[]" value="2m-4m"> Từ 2 triệu - 4 triệu</label>
+            <label><input type="checkbox" name="price[]" value="above-4m"> Trên 4 triệu</label>
 
             <h3>Lọc theo thương hiệu</h3>
             <label><input type="checkbox" name="brand" value="Yonex"> Yonex</label>

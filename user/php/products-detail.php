@@ -1,19 +1,72 @@
 <?php
+session_start();
 include '../db/connect.php';
-
-$product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-
-$sql = "SELECT * FROM products WHERE id = $product_id";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $product = $result->fetch_assoc();
+// kiêm tra lay tham so id
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = intval($_GET['id']);
+    
+    // Truy vấn sản phẩm từ cơ sở dữ liệu
+    $sql = "SELECT * FROM products WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $product = $result->fetch_assoc();
+    } else {
+        echo "Không tìm thấy sản phẩm.";
+        exit;
+    }
 } else {
-    echo "Không tìm thấy sản phẩm.";
+    echo "ID không hợp lệ.";
     exit;
 }
-?>
+// xu li gio hang
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_SESSION['username'])) {
+        // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
+        header("Location: login.php");
+        exit;
+    }
 
+    // Nếu đã đăng nhập, xử lý thêm sản phẩm vào giỏ hàng
+    $product_id = $_POST['product_id'];
+    $product_title = $_POST['product_title'];
+    $product_price = $_POST['product_price'];
+    $product_image = $_POST['product_image'];
+    $product_quantity = isset($_POST['product_quantity']) ? intval($_POST['product_quantity']) : 1;
+
+    // Tạo mảng sản phẩm
+    $product = [
+        'id' => $product_id,
+        'title' => $product_title,
+        'price' => $product_price,
+        'image' => $product_image,
+        'quantity' => $product_quantity
+    ];
+
+    // Kiểm tra nếu giỏ hàng chưa tồn tại, tạo giỏ hàng
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+$_SESSION['cart'][] = $product;
+
+// Tăng số lượng sản phẩm trên biểu tượng giỏ hàng
+    if (!isset($_SESSION['cart_count'])) {
+        $_SESSION['cart_count'] = 0;
+    }
+    $_SESSION['cart_count']++;
+
+    header("Location: products-detail.php?id=$product_id");
+    exit;
+    } else if (isset($_POST['buy_now'])) {
+        header("Location: payment.php?product_id=$product_id&product_title=" . urlencode($product_title) . "&product_price=$product_price&product_image=" . urlencode($product_image) . "&product_quantity=$product_quantity");
+        exit;
+}
+
+?>
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,6 +156,7 @@ if ($result->num_rows > 0) {
         font-weight: bold;
         border-radius: 5px;
         transition: all 0.3s ease;
+        margin-top: 15px;
     }
 
     .custom-btn-outline:hover {
@@ -157,24 +211,32 @@ if ($result->num_rows > 0) {
                     <p><strong>Thương hiệu:</strong> <?php echo $product['brand']; ?></p>
                     <p><strong>Tình trạng:</strong> <?php echo $product['status']; ?></p>
 
-                    <div class="product-quantity mt-4">
-                        <h2 class="fs-5">Số lượng</h2>
-                        <div class="d-flex align-items-center">
-                            <button class="btn btn-outline-secondary" onclick="updateQuantity(-1)">-</button>
-                            <input type="number" id="quantity" value="1" min="1" max="99" class="form-control text-center mx-2" style="width: 60px;">
-                            <button class="btn btn-outline-secondary" onclick="updateQuantity(1)">+</button>
-                        </div>
-                    </div>
-
                     <div class="product-promotions mt-4">
                         <h2 class="fs-5">Ưu đãi</h2>
                         <?php echo $product['promotions']; ?>
                     </div>
 
-                    <div class="mt-4">
-                        <button class="btn btn-primary btn-lg custom-btn">Thêm vào giỏ hàng</button>
-                        <button class="btn btn-outline-secondary btn-lg custom-btn-outline">Mua ngay</button>
-                    </div>
+                    <?php if (isset($_SESSION['username'])): ?>
+                        <form id="add-to-cart-form" method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                            <input type="hidden" name="product_title" value="<?php echo htmlspecialchars($product['title']); ?>">
+                            <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($product['price']); ?>">
+                            <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($product['image']); ?>">
+                            <div class="product-quantity mt-4">
+                                <h2 class="fs-5">Số lượng</h2>
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(-1)">-</button>
+                                    <input type="number" name="product_quantity" id="quantity" value="1" min="1" max="99" class="form-control text-center mx-2" style="width: 60px;">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(1)">+</button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg custom-btn mt-3">Thêm vào giỏ hàng</button>
+                            <button type="submit" name="buy_now" class="btn btn-outline-secondary btn-lg custom-btn-outline">Mua ngay</button>
+                        </form>
+
+                    <?php else: ?>
+                        <p class="text-danger">Bạn cần <a href="login.php">đăng nhập</a> để thêm sản phẩm vào giỏ hàng.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

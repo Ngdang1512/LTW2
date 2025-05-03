@@ -22,12 +22,19 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-// Đơn hàng mẫu
-$orders = [
-    ["order_id" => "DH001", "date" => "2025-05-01", "address" => "123 Đường A, TP.HCM", "total" => "2,500,000 VND", "status" => "Đã giao"],
-    ["order_id" => "DH002", "date" => "2025-04-28", "address" => "456 Đường B, Hà Nội", "total" => "1,800,000 VND", "status" => "Đang xử lý"],
-    ["order_id" => "DH003", "date" => "2025-04-25", "address" => "789 Đường C, Đà Nẵng", "total" => "3,200,000 VND", "status" => "Đã hủy"]
-];
+// Lấy danh sách đơn hàng của người dùng
+$sql_orders = "SELECT * FROM orders WHERE username = ? ORDER BY created_at DESC";
+$stmt_orders = $conn->prepare($sql_orders);
+$stmt_orders->bind_param("s", $username);
+$stmt_orders->execute();
+$result_orders = $stmt_orders->get_result();
+
+$orders = [];
+if ($result_orders->num_rows > 0) {
+    while ($row = $result_orders->fetch_assoc()) {
+        $orders[] = $row;
+    }
+}
 
 // Xử lý cập nhật thông tin
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_info'])) {
@@ -254,34 +261,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
                 Đơn Hàng Của Bạn
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Mã Đơn Hàng</th>
-                            <th>Ngày</th>
-                            <th>Địa Chỉ</th>
-                            <th>Giá Trị</th>
-                            <th>Tình Trạng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($orders as $order): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($order['order_id']); ?></td>
-                                <td><?= htmlspecialchars($order['date']); ?></td>
-                                <td><?= htmlspecialchars($order['address']); ?></td>
-                                <td><?= htmlspecialchars($order['total']); ?></td>
-                                <td><?= htmlspecialchars($order['status']); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                <?php if (empty($orders)): ?>
+                    <p>Không có đơn hàng nào.</p>
+                <?php else: ?>
+                    <?php foreach ($orders as $order): ?>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <strong>Mã đơn hàng:</strong> <?= $order['id'] ?> <br>
+                                <strong>Ngày đặt:</strong> <?= $order['created_at'] ?> <br>
+                                <strong>Tổng tiền:</strong> <?= number_format($order['total_price'], 0, ',', '.') ?> VND
+                            </div>
+                            <div class="card-body">
+                                <h5>Chi tiết đơn hàng:</h5>
+                                <ul>
+                                    <?php
+                                    $sql_details = "SELECT od.*, p.title FROM order_details od 
+                                                    JOIN products p ON od.product_id = p.id 
+                                                    WHERE od.order_id = ?";
+                                    $stmt_details = $conn->prepare($sql_details);
+                                    $stmt_details->bind_param("i", $order['id']);
+                                    $stmt_details->execute();
+                                    $result_details = $stmt_details->get_result();
+
+                                    while ($detail = $result_details->fetch_assoc()):
+                                    ?>
+                                        <li>
+                                            <?= htmlspecialchars($detail['title']) ?> x <?= $detail['quantity'] ?> - 
+                                            <?= number_format($detail['price'] * $detail['quantity'], 0, ',', '.') ?> VND
+                                        </li>
+                                    <?php endwhile; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
     <?php include 'footer.php'; ?>
+
+    <script>
+        document.getElementById('edit-button').addEventListener('click', function () {
+            document.getElementById('edit-form').style.display = 'block';
+        });
+
+        document.getElementById('cancel-button').addEventListener('click', function () {
+            document.getElementById('edit-form').style.display = 'none';
+        });
+    </script>
 
 </body>
 </html>
