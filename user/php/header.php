@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $cart_count = isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0;
 $cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 ?>
@@ -90,7 +92,11 @@ $cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
                 <!-- Kiểm tra trạng thái đăng nhập -->
                 <?php if (isset($_SESSION['username'])): ?>
                     <div class="d-flex align-items-center">
-                        <p class="mb-0 me-3">Xin chào, <strong><?= htmlspecialchars($_SESSION['username']); ?></strong></p>
+                    <a href="user-info.php" class="btn btn-outline-dark me-3 d-flex align-items-center">
+                        <i class="fa-solid fa-user me-2"></i> <!-- Icon user -->
+                        <span>Xin chào, <strong><?= htmlspecialchars($_SESSION['username']); ?></strong></span>
+                    </a>
+                    <div class="d-flex align-items-center">
                         <a href="logout.php" class="btn btn-danger">Đăng xuất</a>
                     </div>
                 <?php else: ?>

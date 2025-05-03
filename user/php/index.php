@@ -14,12 +14,10 @@
     <?php include 'header.php'; ?>
 
     <!-- Search -->
-    <div class="container mt-4">
-        <?php include 'search.php'; ?>
-    </div>
+    <?php include 'search.php'; ?>
 
     <!-- Banner -->
-    <div id="carouselExampleIndicators" class="carousel slide mt-4" data-bs-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide mt-4" data-bs-ride="carousel" data-bs-interval="3000" style="z-index: 1;">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -36,10 +34,10 @@
                 <img src="/user/image/ban3.webp" class="d-block w-100" alt="Banner 3">
             </div>
             <div class="carousel-item">
-                <img src="/user/image/ban4.webp" class="d-block w-100" alt="Banner 3">
+                <img src="/user/image/ban4.webp" class="d-block w-100" alt="Banner 4">
             </div>
             <div class="carousel-item">
-                <img src="/user/image/ban5.webp" class="d-block w-100" alt="Banner 3">
+                <img src="/user/image/ban5.webp" class="d-block w-100" alt="Banner 5">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

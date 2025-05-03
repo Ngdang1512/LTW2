@@ -25,10 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Nếu username chưa tồn tại, thêm vào cơ sở dữ liệu
-    $sql = "INSERT INTO users (username, password, email) VALUES ('$username', '$password', '$email')";
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Mã hóa mật khẩu
+    $sql = "INSERT INTO users (username, password, email) VALUES ('$username', '$hashed_password', '$email')";
 
     if ($conn->query($sql) === TRUE) {
-        
         header("Location: login.php?success=1");
         exit();
     } else {
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="back-home">
-                <a href="/php/index.php">
+                <a href="/user/php/index.php">
                     <i class="fas fa-home" style="color: black; cursor: pointer;"></i>
                 </a>
             </div>
