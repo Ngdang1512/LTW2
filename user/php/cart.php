@@ -153,9 +153,15 @@ foreach ($cart as $item) {
             </h3>
             <div class="mt-3">
                 <!-- Nút tiếp tục mua hàng -->
-                <a href="products.php" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Tiếp tục mua hàng
-                </a>
+                <?php if (isset($_GET['referer'])): ?>
+                    <a href="<?= htmlspecialchars($_GET['referer']) ?>" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại sản phẩm
+                    </a>
+                <?php else: ?>
+                    <a href="products.php" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Tiếp tục mua hàng
+                    </a>
+                <?php endif; ?> 
                 <!-- Nút thanh toán -->
                 <form action="payment.php" method="POST" class="d-inline">
                     <input type="hidden" name="cart_data" value="<?= htmlspecialchars(json_encode($cart)) ?>">

@@ -80,7 +80,7 @@ $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 
             <!-- Cart and Auth Buttons -->
             <div class="d-flex align-items-center">
-                <a href="cart.php" class="btn btn-outline-dark me-3 position-relative">
+                <a href="cart.php?referer=<?= urlencode($_SERVER['REQUEST_URI']) ?>" class="btn btn-outline-dark me-3 position-relative">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         <?php echo $cart_count; ?>

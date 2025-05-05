@@ -65,7 +65,8 @@ if ($action_type === 'add_to_cart') {
     }
 
     $_SESSION['cart_count'] = array_sum(array_column($_SESSION['cart'], 'quantity'));
-    header("Location: cart.php");
+    $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'products.php';
+    header("Location: cart.php?referer=" . urlencode($referer));
     exit;
 } elseif ($action_type === 'buy_now') {
     // Mua ngay
