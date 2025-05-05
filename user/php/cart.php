@@ -5,6 +5,10 @@ if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit;
 }
+
+if (!isset($_SESSION['referer'])) {
+    $_SESSION['referer'] = $_GET['referer'];
+}
 // Xử lý các hành động trong giỏ hàng
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Xử lý xóa sản phẩm
@@ -46,6 +50,7 @@ foreach ($cart as $item) {
     $total += $item['price'] * $item['quantity'];
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -153,8 +158,8 @@ foreach ($cart as $item) {
             </h3>
             <div class="mt-3">
                 <!-- Nút tiếp tục mua hàng -->
-                <?php if (isset($_GET['referer'])): ?>
-                    <a href="<?= htmlspecialchars($_GET['referer']) ?>" class="btn btn-secondary">
+                <?php if (isset($_SESSION['referer'])): ?>
+                    <a href="<?= htmlspecialchars($_SESSION['referer']) ?>" class="btn btn-secondary">
                         <i class="fas fa-arrow-left"></i> Quay lại sản phẩm
                     </a>
                 <?php else: ?>
@@ -172,7 +177,7 @@ foreach ($cart as $item) {
         </div>
         <?php else: ?>
         <p>Giỏ hàng của bạn đang trống.</p>
-        <a href="products.php" class="btn btn-secondary">Tiếp tục mua hàng</a>
+        <a href="<?= htmlspecialchars($_GET['referer']) ?>" class="btn btn-secondary">Tiếp tục mua hàng</a>
         <?php endif; ?>
 
     </div>

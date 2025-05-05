@@ -72,7 +72,7 @@ if ($action_type === 'add_to_cart') {
     // Mua ngay
     $_SESSION['buy_now'] = $product;
     header("Location: payment.php");
-    exit;
+    exit;   
     }
 }
 ?>
@@ -119,11 +119,11 @@ if ($action_type === 'add_to_cart') {
         color: #555;
     }
     .product-description, .product-specifications, .product-highlights, .product-usage, .product-reviews, .product-faqs {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 20px;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
     }
     .product-description h2, .product-specifications h2, .product-highlights h2, .product-usage h2, .product-reviews h2, .product-faqs h2 {
         font-size: 1.25rem;
