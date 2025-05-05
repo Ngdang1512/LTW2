@@ -10,7 +10,7 @@ if ($_FILES["image"]["name"] != "") {
   move_uploaded_file($_FILES["image"]["tmp_name"], "uploads/" . $image);
 }
 
-$stmt = $conn->prepare("INSERT INTO products (name, category, image) VALUES (?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO ad_products (name, category, image) VALUES (?, ?, ?)");
 $stmt->bind_param("sss", $name, $category, $image);
 $stmt->execute();
 ?>

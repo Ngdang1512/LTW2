@@ -23,7 +23,7 @@ if ($user['role'] === 'admin') {
 }
 
 // 4. Nếu là user bình thường, xoá
-$stmt = $conn->prepare("DELETE FROM users WHERE id=?");
+$stmt = $conn->prepare("DELETE FROM ad_users WHERE id=?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 

@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 
-$result = $conn->query("SELECT * FROM orders");
+$result = $conn->query("SELECT * FROM ad_orders");
 echo "<table class='table'><tr><th>ID</th><th>Khách hàng</th><th>Ngày</th><th>Địa chỉ</th><th>Trạng thái</th><th>Hành động</th></tr>";
 
 while($row = $result->fetch_assoc()) {

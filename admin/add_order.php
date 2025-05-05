@@ -6,7 +6,7 @@ $order_date = $_POST['order_date'];
 $address = $_POST['address'];
 $status = $_POST['status'];
 
-$sql = "INSERT INTO orders (customer_name, order_date, address, status)
+$sql = "INSERT INTO ad_orders (customer_name, order_date, address, status)
         VALUES ('$customer_name', '$order_date', '$address', '$status')";
 
 if ($conn->query($sql) === TRUE) {
