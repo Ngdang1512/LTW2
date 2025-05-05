@@ -24,6 +24,21 @@ $payment_method = $_POST['payment_method'];
 $total_price = $_POST['total_price'];
 $cart = json_decode($_POST['cart_data'], true);
 
+// Nếu thanh toán qua ngân hàng, lấy thêm thông tin thẻ
+$card_holder = trim($_POST['card_holder'] ?? '');
+$card_expiry_month = trim($_POST['card_expiry_month'] ?? '');
+$card_expiry_year = trim($_POST['card_expiry_year'] ?? '');
+$card_serial = trim($_POST['card_serial'] ?? '');
+$bank_name = trim($_POST['bank_name'] ?? '');
+
+if ($payment_method === 'online' && $bank_name === 'vcb') {
+    if (empty($card_holder) || empty($card_expiry_month) || empty($card_expiry_year) || empty($card_serial)) {
+        echo "Thông tin thẻ không đầy đủ. Vui lòng kiểm tra lại.";
+        exit();
+    }
+    $card_expiry = $card_expiry_month . '/' . $card_expiry_year;
+}
+
 // Lưu thông tin đơn hàng vào cơ sở dữ liệu
 $stmt = $conn->prepare("INSERT INTO orders (username, receiver_name, phone, address, email, note, payment_method, total_price, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
 $stmt->bind_param("sssssssd", $_SESSION['username'], $receiver_name, $phone, $address, $email, $note, $payment_method, $total_price);

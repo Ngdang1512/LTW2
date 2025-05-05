@@ -39,6 +39,14 @@ $stmt_details = $conn->prepare($sql_details);
 $stmt_details->bind_param("i", $order_id);
 $stmt_details->execute();
 $result_details = $stmt_details->get_result();
+
+// Lấy thông tin thẻ thanh toán (nếu có)
+$sql_card = "SELECT * FROM payment_cards WHERE order_id = ?";
+$stmt_card = $conn->prepare($sql_card);
+$stmt_card->bind_param("i", $order_id);
+$stmt_card->execute();
+$result_card = $stmt_card->get_result();
+$card = $result_card->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +78,13 @@ $result_details = $stmt_details->get_result();
                         </li>
                     <?php endwhile; ?>
                 </ul>
+                <?php if ($card): ?>
+                    <h5 class="mt-4">Thông tin thẻ thanh toán:</h5>
+                    <p><strong>Ngân hàng:</strong> <?= htmlspecialchars($card['bank_name']) ?></p>
+                    <p><strong>Tên chủ thẻ:</strong> <?= htmlspecialchars($card['card_holder']) ?></p>
+                    <p><strong>Ngày hết hạn:</strong> <?= htmlspecialchars($card['card_expiry']) ?></p>
+                    <p><strong>Số thẻ:</strong> <?= htmlspecialchars($card['card_serial']) ?></p>
+                <?php endif; ?>
             </div>
         </div>
         <a href="index.php" class="btn btn-primary mt-4">Quay về trang chủ</a>
