@@ -1,9 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-$cart_count = isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0;
-$cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+// Đếm số lượng sản phẩm khác nhau trong giỏ hàng
+$cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 ?>
 
 <header class="navbar navbar-expand-lg" style="background-color: #f8f9fa; border-bottom: 1px solid #ddd;">

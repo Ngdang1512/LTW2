@@ -1,3 +1,8 @@
+<?php
+session_start();
+include "../db/connect.php";
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -105,7 +110,7 @@
         // Gộp chung danh sách sản phẩm
         $products = [
             // Danh sách sản phẩm vợt
-            ["id" => 1, "image" => "/user/image/88d.jpg", "title" => "Yonex Astrox 88D Pro", "price" => "4,000,000 VND", "brand" => "Yonex"],
+            ["id" => 1, "image" => "/user/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4,000,000 VND", "brand" => "Yonex"],
             ["id" => 2, "image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3,500,000 VND", "brand" => "Yonex"],
             ["id" => 3, "image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "4,380,000 VND", "brand" => "Yonex"],
             ["id" => 4, "image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "3,380,000 VND", "brand" => "Yonex"],

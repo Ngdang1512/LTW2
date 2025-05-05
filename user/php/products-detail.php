@@ -28,14 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: login.php");
         exit;
     }
-
-    // Nếu đã đăng nhập, xử lý thêm sản phẩm vào giỏ hàng
+    $action_type = $_POST['action_type'];
     $product_id = $_POST['product_id'];
     $product_title = $_POST['product_title'];
     $product_price = $_POST['product_price'];
     $product_image = $_POST['product_image'];
     $product_quantity = isset($_POST['product_quantity']) ? intval($_POST['product_quantity']) : 1;
-
+    
     // Tạo mảng sản phẩm
     $product = [
         'id' => $product_id,
@@ -45,26 +44,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'quantity' => $product_quantity
     ];
 
-    // Kiểm tra nếu giỏ hàng chưa tồn tại, tạo giỏ hàng
+   
+if ($action_type === 'add_to_cart') {
+    // Thêm vào giỏ hàng
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
 
-$_SESSION['cart'][] = $product;
-
-// Tăng số lượng sản phẩm trên biểu tượng giỏ hàng
-    if (!isset($_SESSION['cart_count'])) {
-        $_SESSION['cart_count'] = 0;
+    $product_exists = false;
+    foreach ($_SESSION['cart'] as &$cart_item) {
+        if ($cart_item['id'] === $product_id) {
+            $cart_item['quantity'] += $product_quantity;
+            $product_exists = true;
+            break;
+        }
     }
-    $_SESSION['cart_count']++;
 
-    header("Location: products-detail.php?id=$product_id");
+    if (!$product_exists) {
+        $_SESSION['cart'][] = $product;
+    }
+
+    $_SESSION['cart_count'] = array_sum(array_column($_SESSION['cart'], 'quantity'));
+    header("Location: cart.php");
     exit;
-    } else if (isset($_POST['buy_now'])) {
-        header("Location: payment.php?product_id=$product_id&product_title=" . urlencode($product_title) . "&product_price=$product_price&product_image=" . urlencode($product_image) . "&product_quantity=$product_quantity");
-        exit;
+} elseif ($action_type === 'buy_now') {
+    // Mua ngay
+    $_SESSION['buy_now'] = $product;
+    header("Location: payment.php");
+    exit;
+    }
 }
-
 ?>
  
 <!DOCTYPE html>
@@ -217,11 +226,14 @@ $_SESSION['cart'][] = $product;
                     </div>
 
                     <?php if (isset($_SESSION['username'])): ?>
-                        <form id="add-to-cart-form" method="POST">
+                        <form id="product-action-form" method="POST">
                             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                             <input type="hidden" name="product_title" value="<?php echo htmlspecialchars($product['title']); ?>">
                             <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($product['price']); ?>">
                             <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($product['image']); ?>">
+                            <input type="hidden" name="product_quantity" id="form-quantity" value="1">
+                            <input type="hidden" name="action_type" id="action-type" value="">
+
                             <div class="product-quantity mt-4">
                                 <h2 class="fs-5">Số lượng</h2>
                                 <div class="d-flex align-items-center">
@@ -230,8 +242,9 @@ $_SESSION['cart'][] = $product;
                                     <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(1)">+</button>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg custom-btn mt-3">Thêm vào giỏ hàng</button>
-                            <button type="submit" name="buy_now" class="btn btn-outline-secondary btn-lg custom-btn-outline">Mua ngay</button>
+
+                            <button type="button" class="btn btn-primary btn-lg custom-btn mt-3" onclick="submitForm('add_to_cart')">Thêm vào giỏ hàng</button>
+                            <button type="button" class="btn btn-success btn-lg custom-btn-outline mt-3" onclick="submitForm('buy_now')">Mua ngay</button>
                         </form>
 
                     <?php else: ?>
@@ -274,6 +287,7 @@ $_SESSION['cart'][] = $product;
     <script>
     function updateQuantity(change) {
         const quantityInput = document.getElementById('quantity');
+        const formQuantityInput = document.getElementById('form-quantity');
         let currentQuantity = parseInt(quantityInput.value);
 
         // Tăng hoặc giảm số lượng
@@ -288,6 +302,14 @@ $_SESSION['cart'][] = $product;
 
         // Cập nhật giá trị số lượng
         quantityInput.value = currentQuantity;
+        formQuantityInput.value = currentQuantity;
+    }
+
+    function submitForm(actionType) {
+        const actionTypeInput = document.getElementById('action-type');
+        actionTypeInput.value = actionType; // Gán giá trị hành động (add_to_cart hoặc buy_now)
+        const form = document.getElementById('product-action-form');
+        form.submit();
     }
     </script>
 

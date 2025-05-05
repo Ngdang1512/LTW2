@@ -7,10 +7,20 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-// Nhận dữ liệu giỏ hàng từ `POST`
-$cart = isset($_POST['cart_data']) ? json_decode($_POST['cart_data'], true) : [];
-$total_price = isset($_POST['total_price']) ? $_POST['total_price'] : 0;
+// Khởi tạo giỏ hàng và tổng giá trị
+$cart = [];
+$total_price = 0;
 
+if (isset($_SESSION['buy_now'])) {
+    // Xử lý "Mua ngay"
+    $cart[] = $_SESSION['buy_now'];
+    $total_price = $_SESSION['buy_now']['price'] * $_SESSION['buy_now']['quantity'];
+    unset($_SESSION['buy_now']); // Xóa sản phẩm "Mua ngay" sau khi xử lý
+} elseif (isset($_POST['cart_data'])) {
+    // Xử lý thanh toán từ giỏ hàng
+    $cart = json_decode($_POST['cart_data'], true);
+    $total_price = $_POST['total_price'];
+}
 // Nếu giỏ hàng trống, chuyển hướng về trang giỏ hàng
 if (empty($cart)) {
     header("Location: cart.php");
