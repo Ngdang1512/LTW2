@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $stmt = $conn->prepare("SELECT * FROM users WHERE email=? AND password=? AND status='active'");
+  $stmt = $conn->prepare("SELECT * FROM ad_users WHERE email=? AND password=? AND status='active'");
   $stmt->bind_param("ss", $email, $password);
   $stmt->execute();
   $result = $stmt->get_result();

@@ -4,7 +4,7 @@ include "connect.php";
 $id = $_POST["id"];
 
 // 1. Lấy role của user cần xoá
-$stmt = $conn->prepare("SELECT role FROM users WHERE id=?");
+$stmt = $conn->prepare("SELECT role FROM ad_users WHERE id=?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
