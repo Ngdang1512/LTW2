@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $address = $_POST['address'];
     $status = $_POST['status'];
 
-    $stmt = $conn->prepare("INSERT INTO ad_orders (customer_name, order_date, address, status) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO orders (receiver_name, order_date, address, status) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $customer_name, $order_date, $address, $status);
 
     if ($stmt->execute()) {

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     // Kiểm tra xem username hoặc email đã tồn tại chưa
-    $stmt = $conn->prepare("SELECT id FROM admin_users WHERE username = ? OR email = ?");
+    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
     $stmt->bind_param("ss", $username, $email);
     $stmt->execute();
     $stmt->store_result();
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Tên người dùng hoặc email đã tồn tại!";
     } else {
         // Thêm người dùng mới
-        $stmt = $conn->prepare("INSERT INTO admin_users (username, email, password) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $email, $password);
 
         if ($stmt->execute()) {

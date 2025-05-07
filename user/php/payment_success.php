@@ -39,7 +39,6 @@ $stmt_details = $conn->prepare($sql_details);
 $stmt_details->bind_param("i", $order_id);
 $stmt_details->execute();
 $result_details = $stmt_details->get_result();
-
 // Lấy thông tin thẻ thanh toán (nếu có)
 $sql_card = "SELECT * FROM payment_cards WHERE order_id = ?";
 $stmt_card = $conn->prepare($sql_card);
@@ -48,6 +47,8 @@ $stmt_card->execute();
 $result_card = $stmt_card->get_result();
 $card = $result_card->fetch_assoc();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -67,6 +68,7 @@ $card = $result_card->fetch_assoc();
                 <strong>Mã đơn hàng:</strong> <?= $order['id'] ?><br>
                 <strong>Ngày đặt:</strong> <?= $order['created_at'] ?><br>
                 <strong>Tổng tiền:</strong> <?= number_format($order['total_price'], 0, ',', '.') ?> VND
+                
             </div>
             <div class="card-body">
                 <h5>Chi tiết đơn hàng:</h5>
@@ -89,5 +91,6 @@ $card = $result_card->fetch_assoc();
         </div>
         <a href="index.php" class="btn btn-primary mt-4">Quay về trang chủ</a>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 include '../db_admin/connect.php';
 
 $id = $_GET['id'];
-$stmt = $conn->prepare("SELECT * FROM admin_users WHERE id = ?");
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $hashed_password = $user['password'];
         }
 
-        $stmt = $conn->prepare("UPDATE admin_users SET username = ?, email = ?, password = ? WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?");
         $stmt->bind_param("sssi", $username, $email, $hashed_password, $id);
 
         if ($stmt->execute()) {

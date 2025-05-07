@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin'])) {
 include '../db_admin/connect.php';
 
 // Truy vấn tổng số người dùng
-$result_users = $conn->query("SELECT COUNT(*) AS total_users FROM admin_users");
+$result_users = $conn->query("SELECT COUNT(*) AS total_users FROM users");
 $total_users = $result_users->fetch_assoc()['total_users'];
 
 // Truy vấn tổng số sản phẩm

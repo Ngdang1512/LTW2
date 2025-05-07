@@ -38,13 +38,14 @@ if ($result_orders->num_rows > 0) {
 
 // Xử lý cập nhật thông tin
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_info'])) {
+    $full_name = $conn->real_escape_string($_POST['full_name']);
     $email = $conn->real_escape_string($_POST['email']);
     $phone = $conn->real_escape_string($_POST['phone']);
     $address = $conn->real_escape_string($_POST['address']);
     $birthdate = $conn->real_escape_string($_POST['birthdate']);
     $gender = $conn->real_escape_string($_POST['gender']);
 
-    $sql = "UPDATE users SET email = '$email', phone = '$phone', address = '$address', birthdate = '$birthdate', gender = '$gender' WHERE username = '$username'";
+    $sql = "UPDATE users SET full_name = '$full_name', email = '$email', phone = '$phone', address = '$address', birthdate = '$birthdate', gender = '$gender' WHERE username = '$username'";
     if ($conn->query($sql) === TRUE) {
         header("Location: user-info.php");
         exit();
@@ -191,6 +192,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
                             <input type="text" class="form-control" id="username" name="username" value="<?= htmlspecialchars($user['username']); ?>" readonly>
                         </div>
                         <div class="mb-3">
+                            <label for="full_name" class="form-label">Họ và tên:</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" value="<?= htmlspecialchars($user['full_name'] ?? ''); ?>" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="email" class="form-label">Email:</label>
                             <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user['email']); ?>">
                         </div>
@@ -220,6 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
                 <?php else: ?>
                     <!-- Hiển thị thông tin tài khoản -->
                     <p><strong>Tên người dùng:</strong> <?= htmlspecialchars($user['username']); ?></p>
+                    <p><strong>Họ và tên:</strong> <?= htmlspecialchars($user['full_name'] ?? 'Chưa cập nhật'); ?></p>
                     <p><strong>Email:</strong> <?= htmlspecialchars($user['email']); ?></p>
                     <p><strong>Số điện thoại:</strong> <?= htmlspecialchars($user['phone'] ?? 'Chưa cập nhật'); ?></p>
                     <p><strong>Địa chỉ:</strong> <?= htmlspecialchars($user['address'] ?? 'Chưa cập nhật'); ?></p>

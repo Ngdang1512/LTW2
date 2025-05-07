@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     // Kiểm tra xem username đã tồn tại chưa
-    $stmt = $conn->prepare("SELECT id FROM admin_users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT id FROM admins WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Tên người dùng đã tồn tại!";
     } else {
         // Thêm tài khoản mới
-        $stmt = $conn->prepare("INSERT INTO admin_users (username, password) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO admins (username, password) VALUES (?, ?)");
         $stmt->bind_param("ss", $username, $password);
 
         if ($stmt->execute()) {
