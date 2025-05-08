@@ -38,13 +38,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Thêm người dùng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
+<style>
+    .content {
+            margin-left: 250px; /* Đẩy nội dung sang phải để nhường chỗ cho sidebar */
+            padding: 20px;
+        }
+</style>
+
 <body>
 <div class="container mt-5">
+
+    <!-- Sidebar -->
+    <?php include 'sidebar.php'; ?>
+
     <h2 class="text-center">Thêm người dùng</h2>
     <?php if (isset($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
-    <form method="POST" action="">
+    <form class="content" method="POST" action="">
         <div class="mb-3">
             <label for="username" class="form-label">Tên người dùng</label>
             <input type="text" class="form-control" id="username" name="username" required>

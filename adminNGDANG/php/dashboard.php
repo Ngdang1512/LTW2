@@ -40,36 +40,15 @@ $yearly_revenue = $result_yearly_revenue->fetch_assoc()['yearly_revenue'] ?? 0;
             background-color: #f8f9fa;
             color: #212529;
         }
-        .sidebar {
-            height: 100vh;
-            background-color: #343a40;
-            color: #fff;
-            padding: 20px;
-        }
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .sidebar a:hover {
-            background-color: #495057;
-            color: #fff;
-        }
-        .content {
-            margin-left: 250px; /* Đẩy nội dung sang phải để nhường chỗ cho sidebar */
-            padding: 20px;
-        }
         .btn {
-            background-color: #000; /* Nền đen */
-            color: #fff; /* Chữ trắng */
-            border: 1px solid #000; /* Viền đen */
+            background-color: #000;
+            color: #fff;
+            border: 1px solid #000;
         }
         .btn:hover {
-            background-color: #fff; /* Nền trắng */
-            color: #000; /* Chữ đen */
-            border: 1px solid #000; /* Viền đen */
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #000;
         }
         .card {
             border: none;
@@ -81,19 +60,16 @@ $yearly_revenue = $result_yearly_revenue->fetch_assoc()['yearly_revenue'] ?? 0;
         .card .card-body {
             text-align: center;
         }
+        .content {
+            margin-left: 550px; /* Đẩy nội dung sang phải để nhường chỗ cho sidebar */
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="d-flex">
         <!-- Sidebar -->
-        <div class="sidebar">
-            <h3>Admin Panel</h3>
-            <a href="dashboard.php">Trang chủ</a>
-            <a href="user_list.php">Quản lý người dùng</a>
-            <a href="product_list.php">Quản lý sản phẩm</a>
-            <a href="order_list.php">Quản lý đơn hàng</a>
-            <a href="logout.php" class="btn mt-3">Đăng xuất</a>
-        </div>
+        <?php include 'sidebar.php'; ?>
 
         <!-- Nội dung chính -->
         <div class="content">

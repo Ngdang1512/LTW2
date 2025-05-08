@@ -14,9 +14,6 @@ include '../db_admin/connect.php';
         body {
             background-color: #f8f9fa;
         }
-        .container {
-            margin-top: 50px;
-        }
         .btn {
             background-color: #000;
             color: #fff;
@@ -37,10 +34,18 @@ include '../db_admin/connect.php';
             max-width: 100px;
             height: auto;
         }
+        .content {
+            margin-left: 250px; /* Đẩy nội dung sang phải để nhường chỗ cho sidebar */
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-<div class="container">
+
+    <!-- Sidebar -->
+    <?php include 'sidebar.php'; ?>
+
+<div class="content">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="text-center">Danh sách sản phẩm</h2>
         <a href="dashboard.php" class="btn">Quay lại Dashboard</a> <!-- Nút quay lại -->

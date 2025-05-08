@@ -37,10 +37,18 @@ $products = $product_stmt->get_result();
             text-align: center; /* Căn giữa theo chiều ngang */
             vertical-align: middle; /* Căn giữa theo chiều dọc */
         }
+        .content {
+            margin-left: 250px; /* Đẩy nội dung sang phải để nhường chỗ cho sidebar */
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-<div class="container mt-5">
+
+    <!-- Sidebar -->
+    <?php include 'sidebar.php'; ?>
+
+<div class="content mt-5">
     <h2 class="text-center">Chi tiết đơn hàng</h2>
     <div class="mb-3">
         <strong>ID đơn hàng:</strong> <?php echo $order['id']; ?>

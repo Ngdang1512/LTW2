@@ -13,13 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      // Kiểm tra và xử lý upload hình ảnh
      if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $image = time() . '_' . basename($_FILES['image']['name']);
-        $upload_dir = "../uploads/";
+        $upload_dir = "../adminNGDANG/image/";
         $upload_path = $upload_dir . $image;
   
     // Kiểm tra định dạng file
-    $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+    $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     if (!in_array($_FILES['image']['type'], $allowed_types)) {
-        $error = "Chỉ chấp nhận các định dạng JPG, PNG, GIF.";
+        $error = "Chỉ chấp nhận các định dạng JPG, PNG, GIF, WEBP.";
     } else {
         // Di chuyển file upload vào thư mục
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $upload_path)) {
@@ -51,20 +51,23 @@ if (!isset($error)) {
     <title>Thêm sản phẩm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .preview-img {
-            max-width: 200px;
-            max-height: 200px;
-            margin-top: 10px;
+        .content {
+            margin-left: 250px; /* Đẩy nội dung sang phải để nhường chỗ cho sidebar */
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 <div class="container mt-5">
+
+    <!-- Sidebar -->
+    <?php include 'sidebar.php'; ?>
+
     <h2 class="text-center">Thêm sản phẩm</h2>
     <?php if (isset($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
-    <form method="POST" enctype="multipart/form-data">
+    <form class="content" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="product_code" class="form-label">Mã sản phẩm</label>
             <input type="text" class="form-control" id="product_code" name="product_code" required>

@@ -66,9 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .btn-primary:hover {
             background-color: #0056b3;
         }
+        
     </style>
 <body>
 <div class="container mt-5">
+
+    <!-- Sidebar -->
+    <?php include 'sidebar.php'; ?>
+
     <h2 class="text-center">Sửa người dùng</h2>
     <?php if (isset($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>

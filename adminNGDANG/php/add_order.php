@@ -1,3 +1,4 @@
+<!-- filepath: d:\xampp\htdocs\LTW2\adminNGDANG\php\add_order.php -->
 <?php
 include '../db_admin/connect.php';
 
@@ -11,8 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ssss", $customer_name, $order_date, $address, $status);
 
     if ($stmt->execute()) {
-        header("Location: dashboard.php");
-        exit();
+        $success = "Đơn hàng đã được thêm thành công!";
     } else {
         $error = "Không thể thêm đơn hàng!";
     }
@@ -27,13 +27,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Thêm đơn hàng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
+<style>
+    .content {
+        margin-left: 250px;
+        padding: 20px;
+    }
+    .btn-primary{
+        background-color: #000;
+        color: #fff;
+        border: #000;
+    }
+    .btn-primary:hover {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #000;
+    }
+</style>
+
 <body>
 <div class="container mt-5">
+
+    <!-- Sidebar -->
+    <?php include 'sidebar.php'; ?>
+
     <h2 class="text-center">Thêm đơn hàng</h2>
-    <?php if (isset($error)): ?>
+
+    <!-- Hiển thị thông báo -->
+    <?php if (isset($success)): ?>
+        <div class="alert alert-success"><?php echo $success; ?></div>
+    <?php elseif (isset($error)): ?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
-    <form method="POST" action="">
+
+    <form class="content" method="POST" action="">
         <div class="mb-3">
             <label for="customer_name" class="form-label">Tên khách hàng</label>
             <input type="text" class="form-control" id="customer_name" name="customer_name" required>
