@@ -1,0 +1,123 @@
+<?php
+include '../db/connect.php';
+
+$error = null; // Khởi tạo biến $error mặc định là null
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+    $product_code = trim($_POST['product_code']);
+    $title = trim($_POST['title']);
+    $category = trim($_POST['category']);
+    $price = floatval($_POST['price']);
+    $description = trim($_POST['description']);
+    $brand = trim($_POST['brand']);
+    $image = '';
+
+    // Kiểm tra và xử lý upload hình ảnh
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $image_name = preg_replace('/[^a-zA-Z0-9._-]/', '_', basename($_FILES['image']['name'])); // Xử lý tên file
+        $upload_dir = __DIR__ . "/../upload/"; // Đường dẫn tuyệt đối đến thư mục "upload"
+        $upload_file = $upload_dir . $image_name;
+
+        // Di chuyển file vào thư mục "image"
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_file)) {
+            $image = "/upload/" . $image_name; // Lưu đường dẫn tương đối vào cơ sở dữ liệu
+        } else {
+            $error = "Không thể tải lên hình ảnh.";
+        }
+    } else {
+        $error = "Vui lòng chọn một file hình ảnh hợp lệ.";
+    }
+
+    // Nếu không có lỗi, thêm sản phẩm vào cơ sở dữ liệu
+    if (!$error) {
+        $stmt = $conn->prepare("INSERT INTO products (product_code, title, category, price, description, image, brand) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssdsds", $product_code, $title, $category, $price, $description, $image, $brand);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Thêm sản phẩm thành công!'); window.location.href = 'product_list.php';</script>";
+        } else {
+            echo "Lỗi SQL: " . $stmt->error;
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm sản phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .content {
+            margin-left: 250px; /* Đẩy nội dung sang phải để nhường chỗ cho sidebar */
+            padding: 20px;
+        }
+        .preview-img {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+
+    <!-- Sidebar -->
+    <?php include 'sidebar.php'; ?>
+
+    <h2 class="text-center">Thêm sản phẩm</h2>
+
+    <!-- Hiển thị thông báo lỗi -->
+    <?php if (isset($error)): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $error; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
+    <form class="content" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="product_code" class="form-label">Mã sản phẩm</label>
+            <input type="text" class="form-control" id="product_code" name="product_code" required>
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="brand" class="form-label">Hãng</label>
+            <select class="form-select" id="brand" name="brand" required>
+                <option value="Yonex">Yonex</option>
+                <option value="Lining">Lining</option>
+                <option value="Mizuno">Mizuno</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Phân loại</label>
+            <select class="form-select" id="category" name="category" required>
+                <option value="Vợt cầu lông">Vợt cầu lông</option>
+                <option value="Giày cầu lông">Giày cầu lông</option>
+                <option value="Quần áo thể thao">Quần áo thể thao</option>
+                <option value="Phụ kiện">Phụ kiện</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Giá sản phẩm</label>
+            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Mô tả</label>
+            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Hình ảnh</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+            <small class="text-muted">Chọn file hình ảnh từ máy tính.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+        <a href="/admin/php/product_list.php" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

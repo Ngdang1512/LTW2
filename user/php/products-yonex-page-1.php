@@ -214,18 +214,18 @@ if ($result->num_rows > 0) {
             <?php
             // Mô phỏng danh sách sản phẩm
             $products = [
-                ["id" => 1,"image" => "/user/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
-                ["id" => 2,"image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
-                ["id" => 3,"image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
-                ["id" => 4,"image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"],
-                ["id" => 1,"image" => "/user/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
-                ["id" => 2,"image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
-                ["id" => 3,"image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
-                ["id" => 4,"image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"],
-                ["id" => 1,"image" => "/user/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
-                ["id" => 2,"image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
-                ["id" => 3,"image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
-                ["id" => 4,"image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"]
+                ["id" => 1,"image" => "/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
+                ["id" => 2,"image" => "/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
+                ["id" => 3,"image" => "/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
+                ["id" => 4,"image" => "/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"],
+                ["id" => 1,"image" => "/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
+                ["id" => 2,"image" => "/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
+                ["id" => 3,"image" => "/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
+                ["id" => 4,"image" => "/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"],
+                ["id" => 1,"image" => "/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4.000.000 VND"],
+                ["id" => 2,"image" => "/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3.000.000 VND"],
+                ["id" => 3,"image" => "/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "7.000.000 VND"],
+                ["id" => 4,"image" => "/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "1.580.000 VND"]
             ];
 
             // Hiển thị sản phẩm

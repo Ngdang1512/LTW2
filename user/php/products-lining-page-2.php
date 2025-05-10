@@ -182,18 +182,18 @@ if ($result->num_rows > 0) {
             <?php
             // Mô phỏng danh sách sản phẩm
             $products = [
-                ["id" => 5, "image" => "/user/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
-                ["id" => 6, "image" => "/user/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
-                ["id" => 7, "image" => "/user/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
-                ["id" => 8, "image" => "/user/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"],
-                ["id" => 5, "image" => "/user/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
-                ["id" => 6, "image" => "/user/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
-                ["id" => 7, "image" => "/user/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
-                ["id" => 8, "image" => "/user/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"],
-                ["id" => 5, "image" => "/user/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
-                ["id" => 6, "image" => "/user/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
-                ["id" => 7, "image" => "/user/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
-                ["id" => 8, "image" => "/user/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"]
+                ["id" => 5, "image" => "/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
+                ["id" => 6, "image" => "/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
+                ["id" => 7, "image" => "/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
+                ["id" => 8, "image" => "/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"],
+                ["id" => 5, "image" => "/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
+                ["id" => 6, "image" => "/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
+                ["id" => 7, "image" => "/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
+                ["id" => 8, "image" => "/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"],
+                ["id" => 5, "image" => "/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
+                ["id" => 6, "image" => "/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
+                ["id" => 7, "image" => "/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
+                ["id" => 8, "image" => "/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"]
                 ];
 
             // Hiển thị sản phẩm

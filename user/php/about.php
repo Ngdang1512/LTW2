@@ -22,7 +22,7 @@
     <!-- Phần hình ảnh và mô tả -->
     <div class="row align-items-center mb-5">
       <div class="col-md-6 text-center">
-        <img src="/user/image/about-us.png" alt="Về chúng tôi" class="img-fluid rounded shadow w-50">
+        <img src="/image/about-us.png" alt="Về chúng tôi" class="img-fluid rounded shadow w-50">
       </div>
       <div class="col-md-6">
         <h2 class="h4 mb-3">Sứ mệnh của chúng tôi</h2>

@@ -7,7 +7,7 @@ $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
     <div class="container">
         <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center" href="/user/php/index.php">
-            <img src="/user/image/logo.jpg" alt="Badminton Logo" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+            <img src="../image/logo.jpg" alt="Badminton Logo" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
             <span class="fw-bold fs-4 text-dark">Badminton Store</span>
         </a>
 

@@ -99,14 +99,14 @@
 
         <?php
         $products = [
-            ["id" => 1, "image" => "/user/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4,000,000 VND", "brand" => "Yonex"],
-            ["id" => 2, "image" => "/user/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3,500,000 VND", "brand" => "Yonex"],
-            ["id" => 3, "image" => "/user/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "4,380,000 VND", "brand" => "Yonex"],
-            ["id" => 4, "image" => "/user/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "3,380,000 VND", "brand" => "Yonex"],
-            ["id" => 5, "image" => "/user/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
-            ["id" => 6, "image" => "/user/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
-            ["id" => 7, "image" => "/user/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
-            ["id" => 8, "image" => "/user/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"]
+            ["id" => 1, "image" => "/image/88d.webp", "title" => "Yonex Astrox 88D Pro", "price" => "4,000,000 VND", "brand" => "Yonex"],
+            ["id" => 2, "image" => "/image/nnf800.jpg", "title" => "Yonex Nanoflare 800", "price" => "3,500,000 VND", "brand" => "Yonex"],
+            ["id" => 3, "image" => "/image/arc11pro.jpg", "title" => "Yonex Arcsaber 11 Pro", "price" => "4,380,000 VND", "brand" => "Yonex"],
+            ["id" => 4, "image" => "/image/duorazstrike.jpg", "title" => "Yonex Duora Z-Strike", "price" => "3,380,000 VND", "brand" => "Yonex"],
+            ["id" => 5, "image" => "/image/bladex900moon.jpg", "title" => "Lining Bladex 900 Moon", "price" => "2,500,000 VND", "brand" => "Lining"],
+            ["id" => 6, "image" => "/image/axf100.jpg", "title" => "Lining Axforce 100", "price" => "3,200,000 VND", "brand" => "Lining"],
+            ["id" => 7, "image" => "/image/clb900.jpg", "title" => "Lining 3D Calibar 900", "price" => "4,800,000 VND", "brand" => "Lining"],
+            ["id" => 8, "image" => "/image/hbt9000.jpg", "title" => "Lining Habertec 9000", "price" => "3,900,000 VND", "brand" => "Lining"]
         ];
 
         // Hiển thị sản phẩm theo thương hiệu

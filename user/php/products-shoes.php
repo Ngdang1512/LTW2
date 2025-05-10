@@ -105,14 +105,14 @@
         // Gộp chung danh sách sản phẩm
         $products = [
             // Danh sách sản phẩm vợt
-            ["id" => 9, "image" => "/user/image/65z3.jpg", "title" => "Yonex Power Cushion 65Z3", "price" => "2,800,000 VND", "brand" => "Yonex"],
-            ["id" => 10, "image" => "/user/image/88dial3.webp", "title" => "Yonex Power Cushion 88 Dial 3", "price" => "3,200,000 VND", "brand" => "Yonex"],
-            ["id" => 11, "image" => "/user/image/aerusZ2.webp", "title" => "Yonex Aerus Z2", "price" => "3,500,000 VND", "brand" => "Yonex"],
-            ["id" => 12, "image" => "/user/image/comfortZ3.webp", "title" => "Yonex Comfort Z3", "price" => "3,100,000 VND", "brand" => "Yonex"],
-            ["id" => 13, "image" => "/user/image/ayau005-1.webp", "title" => "Lining AYAU005-1", "price" => "2,700,000 VND", "brand" => "Lining"],
-            ["id" => 14, "image" => "/user/image/ayazt003-1.webp", "title" => "Lining AYAZT003-1", "price" => "3,000,000 VND", "brand" => "Lining"],
-            ["id" => 15, "image" => "/user/image/ayzu015-1.webp", "title" => "Lining AYZU015-1", "price" => "3,800,000 VND", "brand" => "Lining"],
-            ["id" => 16, "image" => "/user/image/bladepro.jpg", "title" => "Lining Blade Pro", "price" => "2,900,000 VND", "brand" => "Lining"],
+            ["id" => 9, "image" => "/image/65z3.jpg", "title" => "Yonex Power Cushion 65Z3", "price" => "2,800,000 VND", "brand" => "Yonex"],
+            ["id" => 10, "image" => "/image/88dial3.webp", "title" => "Yonex Power Cushion 88 Dial 3", "price" => "3,200,000 VND", "brand" => "Yonex"],
+            ["id" => 11, "image" => "/image/aerusZ2.webp", "title" => "Yonex Aerus Z2", "price" => "3,500,000 VND", "brand" => "Yonex"],
+            ["id" => 12, "image" => "/image/comfortZ3.webp", "title" => "Yonex Comfort Z3", "price" => "3,100,000 VND", "brand" => "Yonex"],
+            ["id" => 13, "image" => "/image/ayau005-1.webp", "title" => "Lining AYAU005-1", "price" => "2,700,000 VND", "brand" => "Lining"],
+            ["id" => 14, "image" => "/image/ayazt003-1.webp", "title" => "Lining AYAZT003-1", "price" => "3,000,000 VND", "brand" => "Lining"],
+            ["id" => 15, "image" => "/image/ayzu015-1.webp", "title" => "Lining AYZU015-1", "price" => "3,800,000 VND", "brand" => "Lining"],
+            ["id" => 16, "image" => "/image/bladepro.jpg", "title" => "Lining Blade Pro", "price" => "2,900,000 VND", "brand" => "Lining"],
         ];
 
         // Hiển thị sản phẩm theo thương hiệu

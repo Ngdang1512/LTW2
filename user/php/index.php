@@ -40,19 +40,19 @@ if ($result->num_rows > 0) {
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="/user/image/ban1.webp" class="d-block w-100" alt="Banner 1">
+                <img src="/image/ban1.webp" class="d-block w-100" alt="Banner 1">
             </div>
             <div class="carousel-item">
-                <img src="/user/image/ban2.webp" class="d-block w-100" alt="Banner 2">
+                <img src="/image/ban2.webp" class="d-block w-100" alt="Banner 2">
             </div>
             <div class="carousel-item">
-                <img src="/user/image/ban3.webp" class="d-block w-100" alt="Banner 3">
+                <img src="/image/ban3.webp" class="d-block w-100" alt="Banner 3">
             </div>
             <div class="carousel-item">
-                <img src="/user/image/ban4.webp" class="d-block w-100" alt="Banner 4">
+                <img src="/image/ban4.webp" class="d-block w-100" alt="Banner 4">
             </div>
             <div class="carousel-item">
-                <img src="/user/image/ban5.webp" class="d-block w-100" alt="Banner 5">
+                <img src="/image/ban5.webp" class="d-block w-100" alt="Banner 5">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
