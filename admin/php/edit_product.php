@@ -8,6 +8,7 @@ $stmt->execute();
 $product = $stmt->get_result()->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $new_id = intval($_POST['id']);
     $product_code = trim($_POST['product_code']);
     $title = trim($_POST['title']);
     $brand = trim($_POST['brand']);
@@ -17,16 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $image = $product['image']; // Giữ hình ảnh cũ nếu không có hình ảnh mới
 
     // Kiểm tra và xử lý upload hình ảnh mới
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $image_name = basename($_FILES['image']['name']);
-        $upload_dir = $_SERVER['DOCUMENT_ROOT'] . "/image/"; // Đường dẫn đầy đủ đến thư mục lưu trữ
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $image_name = preg_replace('/[^a-zA-Z0-9._-]/', '_', basename($_FILES['image']['name'])); // Xử lý tên file
+        $upload_dir = __DIR__ . "/../upload/"; // Đường dẫn tuyệt đối đến thư mục "upload"
         $upload_path = $upload_dir . $image_name;
-    
+
         // Tạo thư mục nếu chưa tồn tại
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
-    
+
         // Kiểm tra định dạng file
         $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
         if (!in_array($_FILES['image']['type'], $allowed_types)) {
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Di chuyển file upload vào thư mục
             if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_path)) {
-                $image = "/image/" . $image_name; // Lưu đường dẫn đầy đủ vào cơ sở dữ liệu
+                $image = "/upload/" . $image_name; // Lưu đường dẫn đầy đủ vào cơ sở dữ liệu
             } else {
                 $error = "Không thể upload hình ảnh!";
             }
@@ -43,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Nếu không có lỗi, cập nhật sản phẩm vào cơ sở dữ liệu
     if (!isset($error)) {
-        $stmt = $conn->prepare("UPDATE products SET product_code = ?, title = ?, brand = ?, category = ?, price = ?, description = ?, image = ? WHERE id = ?");
-        $stmt->bind_param("sssssdsi", $product_code, $title, $brand, $category, $price, $description, $image, $id);
+        $stmt = $conn->prepare("UPDATE products SET id = ?, product_code = ?, title = ?, brand = ?, category = ?, price = ?, description = ?, image = ? WHERE id = ?");
+        $stmt->bind_param("issssdsii", $new_id, $product_code, $title, $brand, $category, $price, $description, $image, $id);
 
         if ($stmt->execute()) {
             header("Location: product_list.php");
@@ -69,6 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         margin-left: 250px; /* Đẩy nội dung sang phải để nhường chỗ cho sidebar */
         padding: 20px;
     }
+    .preview-img {
+        max-width: 100px;
+        margin-top: 10px;
+    }
 </style>
 
 <body>
@@ -82,6 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
     <form class="content" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="id" class="form-label">ID sản phẩm</label>
+            <input type="number" class="form-control" id="id" name="id" value="<?php echo $product['id']; ?>" required>
+        </div>
         <div class="mb-3">
             <label for="product_code" class="form-label">Mã sản phẩm</label>
             <input type="text" class="form-control" id="product_code" name="product_code" value="<?php echo $product['product_code']; ?>" required>
@@ -102,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label for="category" class="form-label">Phân loại</label>
             <select class="form-select" id="category" name="category" required>
                 <option value="Vợt cầu lông" <?php echo $product['category'] == 'Vợt cầu lông' ? 'selected' : ''; ?>>Vợt cầu lông</option>
+                <option value="Giày cầu lông" <?php echo $product['category'] == 'Giày cầu lông' ? 'selected' : ''; ?>>Giày cầu lông</option>
                 <option value="Quần áo thể thao" <?php echo $product['category'] == 'Quần áo thể thao' ? 'selected' : ''; ?>>Quần áo thể thao</option>
                 <option value="Phụ kiện" <?php echo $product['category'] == 'Phụ kiện' ? 'selected' : ''; ?>>Phụ kiện</option>
             </select>
@@ -117,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="mb-3">
             <label for="image" class="form-label">Hình ảnh</label>
             <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewImage(event)">
-            <img id="preview" class="preview-img" src="<?php echo $product['image']; ?>" alt="Hình ảnh hiện tại" style="max-width: 100px;">
+            <img id="preview" class="preview-img" src="<?php echo $product['image']; ?>" alt="Hình ảnh hiện tại">
         </div>
         <button type="submit" class="btn btn-primary">Cập nhật sản phẩm</button>
         <a href="/admin/php/product_list.php" class="btn btn-secondary">Quay lại</a>

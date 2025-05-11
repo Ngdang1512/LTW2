@@ -4,23 +4,28 @@ include '../db/connect.php';
 $error = null; // Khởi tạo biến $error mặc định là null
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+    $id = intval($_POST['id']);
     $product_code = trim($_POST['product_code']);
     $title = trim($_POST['title']);
     $category = trim($_POST['category']);
     $price = floatval($_POST['price']);
     $description = trim($_POST['description']);
     $brand = trim($_POST['brand']);
-    $image = '';
+    $image = null; // Khởi tạo giá trị mặc định là NULL
 
-    // Kiểm tra và xử lý upload hình ảnh
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $image_name = preg_replace('/[^a-zA-Z0-9._-]/', '_', basename($_FILES['image']['name'])); // Xử lý tên file
-        $upload_dir = __DIR__ . "/../upload/"; // Đường dẫn tuyệt đối đến thư mục "upload"
+    // Kiểm tra giá trị từ input ẩn
+    if (!empty($_POST['image_name'])) {
+        $image_name = preg_replace('/[^a-zA-Z0-9._-]/', '_', basename($_POST['image_name'])); // Xử lý tên file
+        $upload_dir = __DIR__ . "/../../image/"; // Đường dẫn tuyệt đối đến thư mục "image"
         $upload_file = $upload_dir . $image_name;
+
+        // Tạo thư mục "image" nếu chưa tồn tại
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
 
         // Di chuyển file vào thư mục "image"
         if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_file)) {
-            $image = "/upload/" . $image_name; // Lưu đường dẫn tương đối vào cơ sở dữ liệu
+            $image = "/image/" . $image_name; // Lưu đường dẫn tương đối vào cơ sở dữ liệu
+            echo "Đường dẫn hình ảnh: " . $image . "<br>"; // Kiểm tra giá trị của $image
         } else {
             $error = "Không thể tải lên hình ảnh.";
         }
@@ -30,14 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Nếu không có lỗi, thêm sản phẩm vào cơ sở dữ liệu
     if (!$error) {
-        $stmt = $conn->prepare("INSERT INTO products (product_code, title, category, price, description, image, brand) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssdsds", $product_code, $title, $category, $price, $description, $image, $brand);
+        $stmt = $conn->prepare("INSERT INTO products (id, product_code, title, category, price, description, image, brand) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssdsss", $id, $product_code, $title, $category, $price, $description, $image, $brand);
 
         if ($stmt->execute()) {
             echo "<script>alert('Thêm sản phẩm thành công!'); window.location.href = 'product_list.php';</script>";
         } else {
-            echo "Lỗi SQL: " . $stmt->error;
+            echo "Lỗi SQL: " . $stmt->error . "<br>";
         }
+    } else {
+        echo "Lỗi: " . $error . "<br>";
     }
 }
 ?>
@@ -77,6 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <form class="content" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
+            <label for="id" class="form-label">ID sản phẩm</label>
+            <input type="number" class="form-control" id="id" name="id" required>
+        </div>
+        <div class="mb-3">
             <label for="product_code" class="form-label">Mã sản phẩm</label>
             <input type="text" class="form-control" id="product_code" name="product_code" required>
         </div>
@@ -111,9 +122,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Hình ảnh</label>
-            <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*" required onchange="updateFileName()">
+            <input type="hidden" id="image_name" name="image_name">
             <small class="text-muted">Chọn file hình ảnh từ máy tính.</small>
+            <p id="selected-image" class="text-success mt-2"></p>
         </div>
+
+        <script>
+            function updateFileName() {
+                const fileInput = document.getElementById('image');
+                const fileNameInput = document.getElementById('image_name');
+                const selectedImage = document.getElementById('selected-image'); // Thẻ hiển thị đường dẫn
+
+                if (fileInput.files.length > 0) {
+                    const fileName = fileInput.files[0].name;
+                    fileNameInput.value = fileName;
+                    selectedImage.textContent = "Hình ảnh được chọn: /image/" + fileName;
+                    console.log("Tên file được chọn: " + fileName);
+                } else {
+                    selectedImage.textContent = "";
+                }
+            }
+        </script>
         <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
         <a href="/admin/php/product_list.php" class="btn btn-secondary">Quay lại</a>
     </form>
